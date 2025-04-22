@@ -7,3 +7,11 @@
     /* float: right; */
    
 }
+
+.classes{
+    /* background-color: black; */
+    display: flex;
+    flex-direction: row;
+    gap: 10;
+}
+
