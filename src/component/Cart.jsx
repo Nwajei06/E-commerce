@@ -33,7 +33,7 @@ const Cart = () => {
           <p>Total Price: ${totalPrice.toFixed(2)}</p>
         </>
       )}
-      <Link to='/paystack' className='btn  btn-outline-dark me-2 bg-dark text-white  border border-dark '>pay now</Link>
+      <Link to='/paystack' className='btn w-60 btn-outline-dark me-2 bg-dark text-white  border border-dark '>pay now</Link>
     </div>
   );
 };
