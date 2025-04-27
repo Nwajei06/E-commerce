@@ -9,7 +9,10 @@ import {CartProvider} from './CartContext';
 
 import './App.css';
 import Contact from "./component/Contact";
-
+import Cart from './component/Cart';
+import Login from "./component/Login";
+import Signup from "./component/Signup";
+import Paystack from "./component/Paystack";
 function App() {
   return (
     <>
@@ -20,8 +23,10 @@ function App() {
         <Route path="/products" element={<Products/>} />
         <Route path="/product/:source/:id" element={<Product />} />
         <Route path="/contact" element={<Contact />} />
-
-
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/paystack" element={<Paystack />} />
       </Routes>
       </CartProvider>
     </>

@@ -12,8 +12,8 @@ function Contact() {
                     <h1>Contact</h1>
                     <ul className="list-inline small">
                         <li className="list-inline-item">name</li>
-                        <li className="list-inline-item">subject</li>
                         <li className="list-inline-item">email</li>
+                        <li className="list-inline-item">subject</li>
                         <li className="list-inline-item">message</li>
                     </ul>
 
