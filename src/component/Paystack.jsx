@@ -1,58 +1,63 @@
-import React from 'react';
-import { PaystackButton } from 'react-paystack';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 
-const PaystackPayment = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  
-  // Get totalPrice from state
-  const totalPrice = location.state?.totalPrice || 0;
+function PaystackPayment() {
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [amount, setAmount] = useState('');
 
-  const publicKey = "pk_live_e741c6c2bb08e138ffee13378b377c89b6cd1c2b";
+  const payWithPaystack = (e) => {
+    e.preventDefault();
 
-  const amount = totalPrice * 100; 
+    if (!email || !name || !amount) {
+      alert("Please fill all fields");
+      return;
+    }
 
-  const email = "customer@example.com"; 
+    const paystack = window.PaystackPop && window.PaystackPop.setup({
+      key: 'pk_live_e741c6c2bb08e138ffee13378b377c89b6cd1c2b', // Replace with your public key
+      email,
+      amount: amount * 100, // kobo
+      currency: 'NGN',
+      metadata: {
+        custom_fields: [
+          {
+            display_name: "Name",
+            variable_name: "name",
+            value: name,
+          }
+        ]
+      },
+      callback: function (response) {
+        alert(`Payment successful. Transaction ref: ${response.reference}`);
+      },
+      onClose: function () {
+        alert('Payment window closed.');
+      }
+    });
 
-  const componentProps = {
-    email,
-    amount,
-    publicKey,
-    metadata: {
-      custom_fields: [
-        {
-          display_name: "Mobile Number",
-          variable_name: "mobile_number",
-          value: "+2348012345678", 
-        }
-      ]
-    },
-    text: "Pay Now",
-    onSuccess: (reference) => {
-      alert('Payment Successful! Reference: ' + reference.reference);
-      console.log('Payment success', reference);
-      navigate('/');
-    },
-    onClose: () => {
-      alert('Payment closed. You did not complete the payment.');
-    },
+    paystack.openIframe();
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center min-vh-100">
-      <div className="card p-4 shadow" style={{ maxWidth: '450px', width: '100%' }}>
-        <h2 className="text-center mb-4">Checkout</h2>
-        <p className="text-center mb-4">Total Amount: ₦{totalPrice.toFixed(2)}</p>
-
-        {totalPrice > 0 ? (
-          <PaystackButton {...componentProps} className="btn btn-primary w-100" />
-        ) : (
-          <p className="text-center">No items to pay for.</p>
-        )}
-      </div>
+    <div className="container mt-4">
+      <h2>Pay with Paystack</h2>
+      <form onSubmit={payWithPaystack}>
+        <div className="mb-3">
+          <label>Full Name</label>
+          <input type="text" className="form-control" value={name} onChange={e => setName(e.target.value)} required />
+        </div>
+        <div className="mb-3">
+          <label>Email</label>
+          <input type="email" className="form-control" value={email} onChange={e => setEmail(e.target.value)} required />
+        </div>
+        <div className="mb-3">
+          <label>Amount (₦)</label>
+          <input type="number" className="form-control" value={amount} onChange={e => setAmount(e.target.value)} required />
+        </div>
+        <button type="submit" className="btn btn-primary">Pay Now</button>
+      </form>
     </div>
   );
-};
+}
 
 export default PaystackPayment;
