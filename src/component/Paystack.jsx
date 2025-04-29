@@ -11,9 +11,9 @@ const PaystackPayment = () => {
 
   const publicKey = "pk_live_e741c6c2bb08e138ffee13378b377c89b6cd1c2b";
 
-  const amount = totalPrice * 100; // Paystack expects amount in Kobo
+  const amount = totalPrice * 100; 
 
-  const email = "customer@example.com"; // You can ask user for email or use a fixed one
+  const email = "customer@example.com"; 
 
   const componentProps = {
     email,
@@ -24,7 +24,7 @@ const PaystackPayment = () => {
         {
           display_name: "Mobile Number",
           variable_name: "mobile_number",
-          value: "+2348012345678", // optional extra data
+          value: "+2348012345678", 
         }
       ]
     },
@@ -32,7 +32,7 @@ const PaystackPayment = () => {
     onSuccess: (reference) => {
       alert('Payment Successful! Reference: ' + reference.reference);
       console.log('Payment success', reference);
-      navigate('/'); // Redirect to homepage or order confirmation page
+      navigate('/');
     },
     onClose: () => {
       alert('Payment closed. You did not complete the payment.');
